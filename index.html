@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Manual MVP</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f4f7fa;
+      color: #333;
+    }
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    ul {
+      padding-left: 1.2rem;
+    }
+    li {
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    li.completed {
+      text-decoration: line-through;
+      background: #e8f4f8;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .badge {
+      display: inline-block;
+      background: #2980b9; /* Darker blue for better contrast (4.5:1 ratio) */
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+      margin-right: 0.5rem;
+    }
+    details {
+      display: inline;
+      margin-left: 0.5rem;
+      font-size: 0.9rem;
+    }
+    summary {
+      display: inline;
+      cursor: pointer;
+      color: #3498db;
+    }
+    details p {
+      display: inline-block;
+      background: #f1f1f1;
+      padding: 0.5rem;
+      border-radius: 4px;
+      margin: 0.2rem 0 0 0.5rem;
+    }
+    #progress-chart {
+      margin-top: 2rem;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛠️ Startup Manual MVP (by Ann Geu-Hwan)</h1>
+  </header>
+  <div class="container">
+    <div class="section" data-section="self-driven">
+      <h2>📘 Self-Driven Design</h2>
+      <ul>
+        <li role="listitem" data-task="q"><span class="badge" aria-label="Question">Q</span> Create your daily question list</li>
+        <li role="listitem" data-task="r"><span class="badge" aria-label="Routines">R</span> Map your routines into asset paths
+          <details>
+            <summary>What's asset paths?</summary>
+            <p>Visual or written representations of your daily routines as reusable components or steps.</p>
+          </details>
+        </li>
+        <li role="listitem" data-task="s"><span class="badge" aria-label="Philosophy">S</span> Design your personal philosophy poster</li>
+      </ul>
+    </div>
+
+    <div class="section" data-section="problem-discovery">
+      <h2>🔍 Problem Discovery</h2>
+      <ul>
+        <li role="listitem" data-task="i"><span class="badge" aria-label="Interview">I</span> Interview yourself with 5 WHYs</li>
+        <li role="listitem" data-task="e"><span class="badge" aria-label="Emotional">E</span> Map emotional triggers with routines</li>
+        <li role="listitem" data-task="c"><span class="badge" aria-label="Persona">C</span> Define your target persona using questions</li>
+      </ul>
+    </div>
+
+    <div class="section" data-section="solution-design">
+      <h2>🧪 Solution Design</h2>
+      <ul>
+        <li role="listitem" data-task="mvp"><span class="badge" aria-label="MVP">MVP</span> Plan your no-code MVP based on your own routine</li>
+        <li role="listitem" data-task="ux"><span class="badge" aria-label="User Experience">UX</span> Visualize Before/After routine shifts</li>
+        <li role="listitem" data-task="gpt"><span class="badge" aria-label="AI Collaboration">GPT</span> Collaborate with AI for solution prompts</li>
+      </ul>
+    </div>
+
+    <div class="section" data-section="execution-system">
+      <h2>📝 Execution System</h2>
+      <ul>
+        <li role="listitem" data-task="hl"><span class="badge" aria-label="HandLoop">HL</span> Practice HandLoop™ (manual copy-paste rituals)
+          <details>
+            <summary>What's HandLoop™?</summary>
+            <p>A method of manually copying and pasting daily routines to reinforce habits and track progress.</p>
+          </details>
+        </li>
+        <li role="listitem" data-task="log"><span class="badge" aria-label="Logging">LOG</span> Use local storage to track daily action</li>
+        <li role="listitem" data-task="html"><span class="badge" aria-label="HTML Output">HTML</span> Output report from ChatGPT & convert to assets</li>
+      </ul>
+    </div>
+
+    <div class="section" data-section="brand-scale">
+      <h2>🚀 Brand & Scale</h2>
+      <ul>
+        <li role="listitem" data-task="b"><span class="badge" aria-label="Branding">B</span> Create a slogan that reflects your life purpose</li>
+        <li role="listitem" data-task="f"><span class="badge" aria-label="Franchise">F</span> Turn routine into shareable franchise elements</li>
+        <li role="listitem" data-task="sop"><span class="badge" aria-label="Standard Operating Procedure">SOP</span> Document your questions and use them for training</li>
+      </ul>
+    </div>
+
+    <canvas id="progress-chart" aria-label="Task completion progress by section"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Load completed tasks from local storage
+    document.querySelectorAll('li[data-task]').forEach(item => {
+      const taskId = item.dataset.task;
+      if (localStorage.getItem(`task-${taskId}`) === 'completed') {
+        item.classList.add('completed');
+      }
+      item.addEventListener('click', () => {
+        item.classList.toggle('completed');
+        if (item.classList.contains('completed')) {
+          localStorage.setItem(`task-${taskId}`, 'completed');
+        } else {
+          localStorage.removeItem(`task-${taskId}`);
+        }
+        updateChart();
+      });
+    });
+
+    // Initialize Chart.js
+    const ctx = document.getElementById('progress-chart').getContext('2d');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Self-Driven', 'Problem Discovery', 'Solution Design', 'Execution', 'Brand & Scale'],
+        datasets: [{
+          label: 'Tasks Completed',
+          data: [0, 0, 0, 0, 0],
+          backgroundColor: ['#3498db', '#e74c3c', '#2ecc71', '#f1c40f', '#9b59b6'],
+          borderColor: ['#2980b9', '#c0392b', '#27ae60', '#f39c12', '#8e44ad'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Tasks Completed' }
+          },
+          x: {
+            title: { display: true, text: 'Sections' }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { enabled: true }
+        }
+      }
+    });
+
+    // Update chart based on completed tasks
+    function updateChart() {
+      const sections = ['self-driven', 'problem-discovery', 'solution-design', 'execution-system', 'brand-scale'];
+      const taskCounts = sections.map(section => {
+        const tasks = document.querySelectorAll(`.section[data-section="${section}"] li.completed`);
+        return tasks.length;
+      });
+      chart.data.datasets[0].data = taskCounts;
+      chart.update();
+    }
+
+    // Initial chart update
+    updateChart();
+  </script>
+</body>
+</html>
