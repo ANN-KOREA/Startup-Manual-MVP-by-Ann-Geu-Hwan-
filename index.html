@@ -6,26 +6,40 @@
   <title>Startup Manual MVP</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
       margin: 0;
       background: #f4f7fa;
       color: #333;
     }
     header {
+      display: block; /* 명시적 표시 */
       background: #2c3e50;
-      color: white;
-      padding: 1rem;
+      color: #ffffff;
+      padding: 1.5rem;
       text-align: center;
+      position: fixed; /* 고정 헤더로 변경 */
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      min-height: 60px; /* 최소 높이 보장 */
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 600; /* 가독성 향상 */
+      line-height: 1.5;
     }
     .container {
       max-width: 900px;
       margin: 2rem auto;
-      background: white;
       padding: 2rem;
+      padding-top: 80px; /* 헤더 높이만큼 여백 추가 */
+      background: white;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    h1, h2 {
+    h2 {
       color: #2c3e50;
     }
     ul {
@@ -46,8 +60,8 @@
     }
     .badge {
       display: inline-block;
-      background: #2980b9; /* Darker blue for better contrast (4.5:1 ratio) */
-      color: white;
+      background: #2980b9;
+      color: #ffffff;
       font-size: 0.75rem;
       padding: 0.3rem 0.6rem;
       border-radius: 5px;
@@ -77,8 +91,8 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>🛠️ Startup Manual MVP (by Ann Geu-Hwan)</h1>
+  <header role="banner">
+    <h1>Startup Manual MVP (by Ann Geu-Hwan)</h1>
   </header>
   <div class="container">
     <div class="section" data-section="self-driven">
